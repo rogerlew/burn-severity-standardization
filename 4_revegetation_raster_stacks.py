@@ -130,19 +130,15 @@ def build_stack(fire_fn, outdir):
             raster_stacker(src_fn, fire_fn, dst_fn)
 
 if __name__ == "__main__":
+    import sys
     from csv import DictReader
 
-    process_targets = """\
-wa4803411723020230818
-id4782411661420230803
-or4545812208520230825
-or4422212214620230806
-or4397112254620230723
-or4251612403720230716
-ca4185912383420230816
-ca4176812304620230816
-az3377910921420230710
-nm3354010838820230713""".split()
+    target_year = None
+    if not sys.argv[-1].endswith('.py'):
+        target_year = sys.argv[-1]
+
+    # use this to process specific fires
+    process_targets = []
 
     with open('compiled_sbs.csv') as fp:
         rdr = DictReader(fp)
@@ -150,12 +146,21 @@ nm3354010838820230713""".split()
         for meta in rdr:
 
             mtbs_id = meta['fire_id'].lower()
+            ignition_date = meta['ignition_date']
 
-            if mtbs_id not in process_targets:
-                continue
+            if target_year:
+                if target_year not in ignition_date:
+                    continue
+
+            if process_targets:
+                if mtbs_id not in process_targets:
+                    continue
 
             standardized_sbs = meta['standardized_sbs']
             outdir = standardized_sbs + "_reveg"
+            if _exists(outdir):
+                continue
+
             os.makedirs(outdir, exist_ok=True)
             print(standardized_sbs)
 
