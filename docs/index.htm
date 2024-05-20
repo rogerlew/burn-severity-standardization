@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Fire Data Search</title>
+    <title>SBS Map Search</title>
     <style>
         body { font-family: Arial, sans-serif; }
         .filter-container { margin: 20px; }
@@ -14,6 +14,15 @@
     </style>
 </head>
 <body>
+    <h3>WEPPcloud Soil Burn Severity Map Search</h3>
+
+    <p>Final Soil Burn Severity maps have been acquired from burnseverity.cr.usgs.gov and automatically standardized using this
+       package (https://github.com/rogerlew/burn-severity-standardization/).
+    </p>
+    <p>The maps have NOT been extensively validated and users are cautioned to be wary of potential errors from the standardization process.
+    </p>
+    <p>For questions, comments, or feedback on these datasets please contact: rogerlew@uidaho.edu
+    </p>
     <div class="filter-container">
         <label for="fireName">Search by fire name:</label>
         <input type="text" id="fireName" placeholder="Fire name">
