@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fire Data Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .filter-container { margin: 20px; }
+        .filter-container label { margin-right: 10px; }
+        .filter-container select, .filter-container input { margin-right: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="filter-container">
+        <label for="fireName">Search by fire name:</label>
+        <input type="text" id="fireName" placeholder="Fire name">
+
+        <label for="fireYear">Fire Year:</label>
+        <select id="fireYear">
+            <option value="all">All years</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+
+        <label for="state">State:</label>
+        <select id="state">
+            <option value="all">All states</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+
+        <label for="ecoregion">Ecoregion:</label>
+        <select id="ecoregion">
+            <option value="all">All ecoregions</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+
+        <button id="searchButton">Search</button>
+    </div>
+
+    <table id="resultsTable" class="sortable">
+        <thead>
+            <tr>
+                <!-- fire_id,fire_name,ignition_date,administrative_unit,field_state,l3_ecoregion,standardized_sbs,field_acres,unburned_px,low_px,moderate_px,high_px -->
+                <th>ID</th>
+                <th>Fire Name</th>
+                <th>Ignition Date</th>
+                <th>Administrative Unit</th>
+                <th>Field State</th>
+                <th>L3 Ecoregion</th>
+                <th>Standardized SBS</th>
+                <th>WEPPcloud Project</th>
+                <th>Field Acres</th>
+                <th>Low Px</th>
+                <th>Moderate Px</th>
+                <th>High Px</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be populated dynamically -->
+        </tbody>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

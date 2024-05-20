@@ -165,7 +165,7 @@ if __name__ == "__main__":
     sbs_dirs = glob('*/')
     sbs_dirs = [d.replace('/', '') for d in sbs_dirs]
 
-    reprocess = 0
+    reprocess = 1
 
     for mtbs_id in sbs_dirs:
 

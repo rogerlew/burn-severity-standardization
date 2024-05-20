@@ -29,6 +29,8 @@ if __name__ == "__main__":
         with open(meta_fn) as fp:
             meta = json.load(fp)
 
+        meta['fire_id'] = meta['fire_id'].lower()
+
         if i == 0:
             fieldnames = list(meta.keys())
             fieldnames.append('standardized_sbs')
