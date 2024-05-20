@@ -5,6 +5,7 @@ fiona.Env(SHAPE_RESTORE_SHX='YES')
 
 
 sbs_fields = """\
+Burn_Sever
 SBS
 Soil_BS
 Soil_Burn
@@ -47,7 +48,14 @@ def find_sbs_key(shp_fn):
 
     c = gpd.read_file(shp_fn)
     key = None
+    for field in sbs_fields:
+        if field in c:
+            return field
+
     for field in c.keys():
+        if 'fid' in field.lower():
+            continue
+
         if 'sbs' in field.lower():
             return field
         if 'burn' in field.lower():
@@ -59,10 +67,6 @@ def find_sbs_key(shp_fn):
         if 'barc' in field.lower():
             return field
         if 'firecode' in field.lower():
-            return field
-
-    for field in sbs_fields:
-        if field in c:
             return field
 
     for field in c.keys():
