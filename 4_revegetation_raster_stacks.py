@@ -87,27 +87,27 @@ products = [
                  dst='statsgo_WS25.tif'),
             dict(src='/geodata/ssurgo/statsgo/raster/laea/90/WTDp/.vrt',
                  dst='statsgo_WTDp.tif'),
-            dict(src='/geodata/daymet/v4/prcp/daymet_v4_daily_na_prcp_{year}.nc',
-                 dst='daymet_prcp_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/dayl/daymet_v4_daily_na_dayl_{year}.nc',
-                 dst='daymet_dayl_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/srad/daymet_v4_daily_na_srad_{year}.nc',
-                 dst='daymet_srad_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/swe/daymet_v4_daily_na_swe_{year}.nc',
-                 dst='daymet_swe_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/tmax/daymet_v4_daily_na_tmax_{year}.nc',
-                 dst='daymet_tmax_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/tmin/daymet_v4_daily_na_tmin_{year}.nc',
-                 dst='daymet_tmin_{year}.tif',
-                 start_year=1980, end_year=2021),
-            dict(src='/geodata/daymet/v4/vp/daymet_v4_daily_na_vp_{year}.nc',
-                dst='daymet_vp_{year}.tif',
-                 start_year=1980, end_year=2021)
+#            dict(src='/geodata/daymet/v4/prcp/daymet_v4_daily_na_prcp_{year}.nc',
+#                 dst='daymet_prcp_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/dayl/daymet_v4_daily_na_dayl_{year}.nc',
+#                 dst='daymet_dayl_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/srad/daymet_v4_daily_na_srad_{year}.nc',
+#                 dst='daymet_srad_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/swe/daymet_v4_daily_na_swe_{year}.nc',
+#                 dst='daymet_swe_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/tmax/daymet_v4_daily_na_tmax_{year}.nc',
+#                 dst='daymet_tmax_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/tmin/daymet_v4_daily_na_tmin_{year}.nc',
+#                 dst='daymet_tmin_{year}.tif',
+#                 start_year=1980, end_year=2021),
+#            dict(src='/geodata/daymet/v4/vp/daymet_v4_daily_na_vp_{year}.nc',
+#                dst='daymet_vp_{year}.tif',
+#                 start_year=1980, end_year=2021)
           ]
 
 def build_stack(fire_fn, outdir):
@@ -158,8 +158,8 @@ if __name__ == "__main__":
 
             standardized_sbs = meta['standardized_sbs']
             outdir = standardized_sbs + "_reveg"
-            if _exists(outdir):
-                continue
+#            if _exists(outdir):
+#                continue
 
             os.makedirs(outdir, exist_ok=True)
             print(standardized_sbs)

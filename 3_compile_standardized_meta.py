@@ -14,9 +14,13 @@ from wepppy.all_your_base.geo import RasterDatasetInterpolator
 from wepppy.all_your_base.geo import read_raster
 from wepppy.nodb.mods.baer.sbs_map import SoilBurnSeverityMap
 
+with open('us_abbreviations.csv') as fp:
+    rdr = csv.DictReader(fp)
+    us_abbreviations = {row['postal'].lower(): row['full'] for row in rdr}
+
 if __name__ == "__main__":
 
-    pf = open('compiled_sbs.csv', 'w')
+    pf = open('compiled_sbs2.csv', 'w')
 
     sbs_fns = glob('*/*usgs_lcc.tif')
     sbs_fns = [fn for fn in sbs_fns if 'dnbr' not in fn]
@@ -30,6 +34,10 @@ if __name__ == "__main__":
             meta = json.load(fp)
 
         meta['fire_id'] = meta['fire_id'].lower()
+
+        if 'field_state' in meta:
+            if meta['field_state'].strip().lower() in us_abbreviations:
+                meta['field_state'] = us_abbreviations[meta['field_state'].strip().lower()]
 
         if i == 0:
             fieldnames = list(meta.keys())

@@ -84,12 +84,15 @@ def isint(x):
 
 
 if __name__ == "__main__":
+    with open('reprocess_list.txt') as fp:
+        mtbs_ids = [x.strip() for x in fp.readlines()]
+
     sbs_dirs = glob('*/')
     sbs_dirs = [d.replace('/', '') for d in sbs_dirs]
 
-    reprocess = 0
+    reprocess = 1
 
-    for mtbs_id in ['or4251612403720230716',]: #sbs_dirs:
+    for mtbs_id in mtbs_ids: #sbs_dirs:
 
         print(f'{mtbs_id}')
         contents = os.listdir(mtbs_id)
@@ -100,12 +103,12 @@ if __name__ == "__main__":
 
         pprint(contents)
 
-        nbr_fns = glob(f'/geodata/mtbs/dnbr6/*/*{mtbs_id}*nbr*.tif')
-        if len(nbr_fns) > 0:
-            print(f'found nbr files: {nbr_fns}')
-            for fn in nbr_fns:
-                shutil.copy(fn, mtbs_id)
-                transform_to_usgs_lcc(_join(mtbs_id, _split(fn)[1]))
+#        nbr_fns = glob(f'/geodata/mtbs/dnbr6/*/*{mtbs_id}*nbr*.tif')
+#        if len(nbr_fns) > 0:
+#            print(f'found nbr files: {nbr_fns}')
+#            for fn in nbr_fns:
+#                shutil.copy(fn, mtbs_id)
+#                transform_to_usgs_lcc(_join(mtbs_id, _split(fn)[1]))
 
         if len(contents) == 1:
             print('no sbs download link available for {mtbs_id}')
