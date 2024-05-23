@@ -84,6 +84,8 @@ def isint(x):
 
 
 if __name__ == "__main__":
+    import ast
+
     with open('reprocess_list.txt') as fp:
         mtbs_ids = [x.strip() for x in fp.readlines()]
 
@@ -133,7 +135,12 @@ if __name__ == "__main__":
             ):
                 continue
 
-            sbs_map = SoilBurnSeverityMap(sbs_fn)
+            ct = None
+            if _exists(sbs_fn + '.spec'):
+                with open(sbs_fn + '.spec') as fp:
+                    ct = ast.literal_eval(fp.read())
+
+            sbs_map = SoilBurnSeverityMap(sbs_fn, ct)
             sbs_map_fn = sbs_fn.replace('.tif', '.standardized.tif').replace('.img', '.img.standardized.tif')
 
             print(f'  standardizing to {sbs_map_fn}')

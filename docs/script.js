@@ -59,15 +59,6 @@ $(document).ready(function() {
         return sortableDate;
     }
 
-    function getBaerDbSearchUrl(ignitionDate) {
-        const [month, day, year] = ignitionDate.split('/');
-
-        const formattedDate = `${year}-${month}-${day}`;
-        const baer_db_search_url = `https://forest.moscowfsl.wsu.edu/cgi-bin/BAERTOOLS/baer-db/index.pl?start_date=${formattedDate}&end_date=${formattedDate}&exp=0&`;
-
-        return baer_db_search_url;
-    }
-
     function populateTable(data) {
         const tbody = $('#resultsTable tbody');
         tbody.empty();
@@ -90,8 +81,11 @@ $(document).ready(function() {
             tr.append($('<td>').html('<a href="https://wepp.cloud/weppcloud/create/disturbed9002?'
                                      + 'landuse:sbs_map=https://wepp.cloud/geodata/mtbs/sbs/'
                                      + row.standardized_sbs + '" target="_blank">Create WEPPcloud Project</a>'));
-            tr.append($('<td>').html('<a href="' + getBaerDbSearchUrl(row.ignition_date) + '" target="_blank">Search baer-db</a>'));
-
+            if (row.baer_db_url != '') {
+                tr.append($('<td>').html('<a href="' + row.baer_db_url + '" target="_blank">Search baer-db</a>'));
+            } else {
+                tr.append($('<td>'));
+            }
 
             tr.append($('<td>').text(row.field_acres));
             tr.append($('<td>').text(row.low_px));

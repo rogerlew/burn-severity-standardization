@@ -14,6 +14,28 @@ from wepppy.all_your_base.geo import RasterDatasetInterpolator
 from wepppy.all_your_base.geo import read_raster
 from wepppy.nodb.mods.baer.sbs_map import SoilBurnSeverityMap
 
+
+import requests
+import re
+
+def get_baer_db_search_url(ignition_date):
+    month, day, year = ignition_date.split('/')
+    formatted_date = f"{year}-{month}-{day}"
+    baer_db_search_url = f"https://forest.moscowfsl.wsu.edu/cgi-bin/BAERTOOLS/baer-db/index.pl?start_date={formatted_date}&end_date={formatted_date}&exp=0&"
+    return baer_db_search_url
+
+def do_baer_query(ignition_date):
+    url = get_baer_db_search_url(ignition_date)
+    response = requests.get(url)
+    response_text = response.text
+
+    match = re.search(r"Found (\d+) BAER reports with this search:", response_text)
+    if match:
+        return int(match.group(1))
+    else:
+        return -1
+
+
 with open('us_abbreviations.csv') as fp:
     rdr = csv.DictReader(fp)
     us_abbreviations = {row['postal'].lower(): row['full'] for row in rdr}
@@ -50,9 +72,16 @@ if __name__ == "__main__":
             fieldnames.append('centroid_lng')
             fieldnames.append('centroid_lat')
             fieldnames.append('l3_ecoregion')
+            fieldnames.append('baer_db_url')
 
             wtr = csv.DictWriter(pf, fieldnames=fieldnames)
             wtr.writeheader()
+
+        ignition_date = meta['ignition_date']
+        baer_db_url = ''
+        if do_baer_query(ignition_date) > 0:
+            baer_db_url = get_baer_db_search_url(ignition_date)
+        meta['baer_db_url'] = baer_db_url
 
         meta['standardized_sbs'] = sbs_fn
 
