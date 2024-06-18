@@ -3,6 +3,7 @@ import csv
 from glob import glob
 from os.path import split as _split
 from os.path import join as _join
+from os.path import exists as _exists
 
 from collections import Counter
 
@@ -73,6 +74,8 @@ if __name__ == "__main__":
             fieldnames.append('centroid_lat')
             fieldnames.append('l3_ecoregion')
             fieldnames.append('baer_db_url')
+            fieldnames.append('canopy_stats_img_url')
+            fieldnames.append('rap_tree_stats_img_url')
 
             wtr = csv.DictWriter(pf, fieldnames=fieldnames)
             wtr.writeheader()
@@ -100,6 +103,21 @@ if __name__ == "__main__":
         meta['centroid_lng'] = wgs_lng
         meta['centroid_lat'] = wgs_lat
         meta['l3_ecoregion'] = l3code
+
+        meta['canopy_stats_img_url'] = None
+        meta['rap_tree_stats_img_url'] = None
+
+        reveg = glob(f'{mtbs_id}/*_reveg')
+        if len(reveg) == 1:
+            reveg = reveg[0]
+            canopy_fn = _join(reveg, 'canopy_stats.png')
+
+            if _exists(canopy_fn):
+                meta['canopy_stats_img_url'] = canopy_fn
+
+            rap_tree_fn = _join(reveg, 'rap_tree_stats.png')
+            if _exists(rap_tree_fn):
+                meta['rap_tree_stats_img_url'] = rap_tree_fn
 
         wtr.writerow(meta)
     pf.close()
