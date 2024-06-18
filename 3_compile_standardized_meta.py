@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         meta['standardized_sbs'] = sbs_fn
 
-        data, _, _ = read_raster(sbs_fn, dtype=np.int)
+        data, _, _ = read_raster(sbs_fn, dtype=np.int32)
         px = dict(Counter(list(data.flatten())).most_common())
         meta['unburned_px'] = px.get(0, 0)
         meta['low_px'] = px.get(1, 1)

@@ -7,6 +7,7 @@ from glob import glob
 from collections import Counter
 from pprint import pprint
 import shutil
+from fnmatch import fnmatch
 
 import math
 import numpy as np
@@ -86,15 +87,22 @@ def isint(x):
 if __name__ == "__main__":
     import ast
 
+    # reprocess_list can be a list of wildcards or mtbs_ids
+    # so * matches everything and will reprocess everything
     with open('reprocess_list.txt') as fp:
-        mtbs_ids = [x.strip() for x in fp.readlines()]
+        mtbs_patterns = [x.strip() for x in fp.readlines()]
+
+    with open('sbs_blacklist.txt') as fp:
+        sbs_blacklist = [x.strip() for x in fp.readlines()]
 
     sbs_dirs = glob('*/')
     sbs_dirs = [d.replace('/', '') for d in sbs_dirs]
 
     reprocess = 1
 
-    for mtbs_id in mtbs_ids: #sbs_dirs:
+    for mtbs_id in sbs_dirs:
+        if not any(fnmatch(mtbs_id, pattern) for pattern in mtbs_patterns):
+            continue
 
         print(f'{mtbs_id}')
         contents = os.listdir(mtbs_id)
@@ -120,6 +128,9 @@ if __name__ == "__main__":
         img_files = glob(_join(mtbs_id, '**', '*.img'), recursive=True)
 
         for sbs_fn in tif_files + img_files:
+            if sbs_fn in sbs_blacklist:
+                continue
+
             name = _split(sbs_fn)[1]
             if '.standardized.' in name:
                 continue
